@@ -80,7 +80,7 @@ resource "local_file" "web-key" {
   filename = "web-key.pem"
 }
 
-resource "aws_instance" "Kubernates-Master" {
+resource "aws_instance" "kubernatesmaster" {
   ami             = "ami-04b70fa74e45c3917"
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.subnet-1.id
@@ -100,7 +100,7 @@ resource "aws_instance" "Kubernates-Master" {
     host        = self.public_ip
   }
    provisioner "local-exec" {
-        command = " echo ${aws_instance.test-server.public_ip} > inventory "
+        command = " echo ${aws_instance.kubernatesmaster.public_ip} > inventory "
   }
    provisioner "local-exec" {
   command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-master-setup.yml.yml "
@@ -108,7 +108,7 @@ resource "aws_instance" "Kubernates-Master" {
   
 }
 
-resource "aws_instance" "Kubernates-Worker" {
+resource "aws_instance" "kubernatesworker" {
   ami             = "ami-04b70fa74e45c3917"
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.subnet-1.id
@@ -128,7 +128,7 @@ resource "aws_instance" "Kubernates-Worker" {
     host        = self.public_ip
   }
    provisioner "local-exec" {
-        command = " echo ${aws_instance.test-server.public_ip} > inventory "
+        command = " echo ${aws_instance.kubernatesworker.public_ip} > inventory "
   }
    provisioner "local-exec" {
   command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-worker-setup.yml "
@@ -136,7 +136,7 @@ resource "aws_instance" "Kubernates-Worker" {
   
 }
 
-resource "aws_instance" "Monitring-Server" {
+resource "aws_instance" "monitringserver" {
   ami             = "ami-04b70fa74e45c3917"
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.subnet-1.id
@@ -156,7 +156,7 @@ resource "aws_instance" "Monitring-Server" {
     host        = self.public_ip
   }
    provisioner "local-exec" {
-        command = " echo ${aws_instance.test-server.public_ip} > inventory "
+        command = " echo ${aws_instance.monitringserver.public_ip} > inventory "
   }
    provisioner "local-exec" {
   command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/monitring.yml "
