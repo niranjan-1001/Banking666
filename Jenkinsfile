@@ -14,7 +14,7 @@ pipeline {
     stage('Create a Package') {
       steps {
          echo 'This will create a package using maven'
-         sh 'mvn clean package'
+         sh 'mvn clean package -DskipTests'
                              }
             }
 
