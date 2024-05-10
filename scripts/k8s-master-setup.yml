@@ -1,6 +1,6 @@
 ---
 - name: Setup Kubernetes Master Node
-  hosts: webserver
+  hosts: all
   become: yes
   tasks:
     - name: Update package repositories
@@ -138,7 +138,6 @@
       copy:
         content: "{{ join_command_output.stdout }} --ignore-preflight-errors=Port-10250"
         dest: /tmp/file.txt
-        mode: u+x
 
     - name: Fetch modified join command script
       fetch:
