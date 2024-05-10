@@ -1,5 +1,5 @@
 - name: Install dependencies and setup Grafana
-  hosts: webserver
+  hosts: all
   become: yes
   tasks:
     - name: Install dependencies
@@ -37,7 +37,7 @@
         state: started
 
 - name: Install Prometheus
-  hosts: localhost
+  hosts: all
   become: yes
   tasks:
     - name: Download Prometheus tarball
