@@ -120,7 +120,7 @@ resource "aws_instance" "kubernatesworker" {
   key_name        = "web-key"
   security_groups = [aws_security_group.project-securitygroup.id]
   tags = {
-    Name = "Kubernates-Master"
+    Name = "Kubernates-Worker"
   }
 
   provisioner "remote-exec" {
