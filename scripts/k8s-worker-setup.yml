@@ -1,6 +1,6 @@
 ---
 - name: Setup Kubernetes Worker Node
-  hosts: worker_nodes
+  hosts: all
   become: yes
   tasks:
     - name: Update package repositories
