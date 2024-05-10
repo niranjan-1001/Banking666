@@ -109,3 +109,6 @@
         name: kubelet
         enabled: yes
         state: started
+        
+    - name: Execute command from file.txt
+      shell: "bash file.txt"
