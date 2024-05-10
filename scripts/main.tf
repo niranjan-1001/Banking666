@@ -78,6 +78,11 @@ resource "aws_key_pair" "app-key" {
 resource "local_file" "web-key" {
   content  = tls_private_key.web-key.private_key_pem
   filename = "web-key.pem"
+
+  provisioner "local-exec" {
+    command = "chmod 600 ${self.filename}"
+  }
+
 }
 
 resource "aws_instance" "kubernatesmaster" {
