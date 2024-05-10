@@ -129,3 +129,19 @@
 
     - name: Deploy Flannel network addon
       shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+    - name: Generate join command
+      shell: sudo kubeadm token create --print-join-command
+      register: join_command_output
+
+    - name: Save join command in a temporary file
+      copy:
+        content: "{{ join_command_output.stdout }} --ignore-preflight-errors=Port-10250"
+        dest: /tmp/file.txt
+        mode: u+x
+
+    - name: Fetch modified join command script
+      fetch:
+        src: /tmp/file.txt
+        dest: ./file.txt
+        flat: yes
