@@ -50,4 +50,3 @@
         src: /tmp/prometheus-2.51.2.linux-amd64.tar.gz
         dest: /opt/
         remote_src: yes
-~
