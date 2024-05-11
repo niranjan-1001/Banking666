@@ -14,8 +14,7 @@
         state: started
         port: 9100
       become: no
-      delegate_to: all  
-
+    
     - name: Expose nodeexporter pod
       shell: kubectl expose pod nodeexporter --type=NodePort --port=9100 --target-port=9100
 
