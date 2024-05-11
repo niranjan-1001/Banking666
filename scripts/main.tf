@@ -136,9 +136,17 @@ resource "aws_instance" "kubernatesworker" {
         command = " echo ${aws_instance.kubernatesworker.public_ip} > inventory "
   }
    provisioner "local-exec" {
-  command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-worker-setup.yml "
+       command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-worker-setup.yml "
   }
   depends_on = [aws_instance.kubernatesmaster]
+}
+
+// check for errors newly added part of code
+resource "null_resource" "local_command" {
+  provisioner "local-exec" {
+    command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/monitring-deployment.yml"
+  }
+
 }
 
 resource "aws_instance" "monitringserver" {
@@ -167,6 +175,9 @@ resource "aws_instance" "monitringserver" {
   command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/monitring.yml "
   }
   
-   depends_on = [aws_instance.kubernatesworker]
+  depends_on = [
+	  aws_instance.kubernatesworker
+	  null_resource.local_command
+]
   
 }
