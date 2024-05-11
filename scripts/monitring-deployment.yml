@@ -3,10 +3,10 @@
   hosts: all
   tasks:
     - name: Run nodeexporter container using kubectl
-      shell: kubectl run nodeexporter --image=prom/node-exporter:latest
+      shell: kubectl create deployment nodeexporter --image=prom/node-exporter:latest
     
     - name: Run cadvisor container using kubectl
-      shell: kubectl run cadvisor --image=gcr.io/cadvisor/cadvisor:latest
+      shell: kubectl create deployment cadvisor --image=gcr.io/cadvisor/cadvisor:latest
 
     - name: Expose nodeexporter pod
       shell: kubectl expose pod nodeexporter --type=NodePort --port=9100 --target-port=9100
