@@ -184,10 +184,8 @@ resource "aws_instance" "monitringserver" {
    provisioner "local-exec" {
   command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/monitring.yml "
   }
+depends_on = [null_resource.local_command]
   
-  depends_on = [
-	  aws_instance.kubernatesworker
-         
-]
+ 
   
 }
