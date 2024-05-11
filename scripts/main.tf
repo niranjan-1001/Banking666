@@ -146,7 +146,7 @@ resource "aws_instance" "kubernatesworker" {
    provisioner "local-exec" {
        command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-worker-setup.yml "
   }
-  depends_on = [null_resource.local_command.local-exec]
+  depends_on = [null_resource.local_command]
 }
 
 // check for errors newly added part of code
