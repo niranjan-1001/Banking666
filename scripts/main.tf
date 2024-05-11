@@ -108,9 +108,17 @@ resource "aws_instance" "kubernatesmaster" {
         command = " echo ${aws_instance.kubernatesmaster.public_ip} > inventory "
   }
    provisioner "local-exec" {
-  command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-master-setup.yml"
+  	command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-master-setup.yml"
   }
   
+}
+
+resource "null_resource" "local_command" {
+  provisioner "local-exec" {
+    command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/monitring-deployment.yml"
+  }
+  depends_on = [aws_instance.kubernatesmaster]
+
 }
 
 resource "aws_instance" "kubernatesworker" {
@@ -138,16 +146,11 @@ resource "aws_instance" "kubernatesworker" {
    provisioner "local-exec" {
        command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/k8s-worker-setup.yml "
   }
-  depends_on = [aws_instance.kubernatesmaster]
+  depends_on = [null_resource.local_command.local-exec]
 }
 
 // check for errors newly added part of code
-resource "null_resource" "local_command" {
-  provisioner "local-exec" {
-    command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/monitring-deployment.yml"
-  }
 
-}
 
 resource "aws_instance" "monitringserver" {
   ami             = "ami-04b70fa74e45c3917"
@@ -156,7 +159,7 @@ resource "aws_instance" "monitringserver" {
   key_name        = "web-key"
   security_groups = [aws_security_group.project-securitygroup.id]
   tags = {
-    Name = "Monitring-Server"
+    Name = "Monitoring-Server"
   }
 
   provisioner "remote-exec" {
@@ -177,7 +180,7 @@ resource "aws_instance" "monitringserver" {
   
   depends_on = [
 	  aws_instance.kubernatesworker
-	  null_resource.local_command
+         
 ]
   
 }
