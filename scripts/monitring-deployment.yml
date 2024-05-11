@@ -9,12 +9,8 @@
       shell: kubectl create deployment cadvisor --image=gcr.io/cadvisor/cadvisor:latest
 
     - name: Wait for nodeexporter pod to be ready
-      wait_for:
-        timeout: 120
-        state: started
-        port: 9100
-      become: no
-    
+      shell: sleep 2m
+      
     - name: Expose nodeexporter pod
       shell: kubectl expose pod nodeexporter --type=NodePort --port=9100 --target-port=9100
 
