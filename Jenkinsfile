@@ -8,7 +8,7 @@ pipeline {
     stage('Git checkout') {
       steps {
          echo 'This is for cloning the gitrepo'
-         git branch: 'main', url: 'https://github.com/Ravi4090/Banking-Demo.git'
+         git branch: 'main', url: 'https://github.com/niranjan-1001/Banking-Demo666.git'
                           }
             }
     stage('Create a Package') {
@@ -18,14 +18,14 @@ pipeline {
                              }
             }
 
-  /*  stage('Publish the HTML Reports') {
+    stage('Publish the HTML Reports') {
       steps {
           publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Banking/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
                         }
-            } */
+            } 
     stage('Create a Docker image') {
       steps {
-        sh 'docker build -t ravishankar119/banking:1.0 .'
+        sh 'docker build -t niranjan1001/banking:1.0 .'
                     }
             }
     stage('Login to Dockerhub') {
@@ -37,7 +37,7 @@ pipeline {
             }
     stage('Push the Docker image') {
       steps {
-        sh 'docker push ravishankar119/banking:1.0'
+        sh 'docker push niranjan1001/banking:1.0'
                                 }
             }
     stage('Create Infrastructure using terraform') {
@@ -46,7 +46,7 @@ pipeline {
             withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'jenkinsIAMuser', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
             sh 'terraform init'
             sh 'terraform validate'
-            sh 'terraform apply --auto-approve -lock=false'
+         //   sh 'terraform apply --auto-approve -lock=false'
                       }
                  }
             }
