@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: bankapp-eta-container
-          image: niranjan1001/banking:latest
+          image: niranjan1001/banking:1.0
           ports:
             - containerPort: 8082
