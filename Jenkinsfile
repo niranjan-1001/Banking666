@@ -14,7 +14,7 @@ pipeline {
     stage('Create a Package') {
       steps {
          echo 'This will create a package using maven'
-         sh 'mvn clean package -DskipTests'
+         sh 'mvn clean package'
                              }
             }
 
@@ -46,7 +46,7 @@ pipeline {
             withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'jenkinsIAMuser', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
             sh 'terraform init'
             sh 'terraform validate'
-         //   sh 'terraform apply --auto-approve -lock=false'
+            sh 'terraform apply --auto-approve -lock=false'
                       }
                  }
             }
