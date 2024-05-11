@@ -114,7 +114,6 @@ resource "aws_instance" "kubernatesmaster" {
 }
 
 
-}
 
 resource "aws_instance" "kubernatesworker" {
   ami             = "ami-04b70fa74e45c3917"
