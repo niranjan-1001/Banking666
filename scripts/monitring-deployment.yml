@@ -1,0 +1,15 @@
+---
+- name: Execute kubectl commands and Docker run
+  hosts: all
+  tasks:
+    - name: Run nodeexporter container using kubectl
+      shell: kubectl run nodeexporter --image=prom/node-exporter:latest
+    
+    - name: Run cadvisor container using kubectl
+      shell: kubectl run cadvisor --image=gcr.io/cadvisor/cadvisor:latest
+
+    - name: Expose nodeexporter pod
+      shell: kubectl expose pod nodeexporter --type=NodePort --port=9100 --target-port=9100
+
+    - name: Expose cadvisor pod
+      shell: kubectl expose pod cadvisor --type=NodePort --port=8080 --target-port=8080
