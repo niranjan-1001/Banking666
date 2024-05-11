@@ -16,10 +16,10 @@ spec:
         app: bankapp-eta-app
     spec:
       containers:
-      - name: bankapp-eta-container
-        image: niranjan1001/banking:latest
-        ports:
-        - containerPort: 8082
+        - name: bankapp-eta-container
+          image: niranjan1001/banking:latest
+          ports:
+            - containerPort: 8082
 ---
 apiVersion: v1
 kind: Service
@@ -30,9 +30,8 @@ metadata:
 spec:
   selector:
     app: bankapp-eta-app
-
   type: NodePort
   ports:
-  - nodePort: 31032    
-    port: 8082
-    targetPort: 8082
+    - nodePort: 31032
+      port: 8082
+      targetPort: 8082
