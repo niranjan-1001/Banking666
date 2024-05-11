@@ -156,6 +156,9 @@ resource "null_resource" "local_command" {
    provisioner "local-exec" {
     command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/deployment.yml"
   }
+   provisioner "local-exec" {
+    command = "ansible-playbook /var/lib/jenkins/workspace/Banking/scripts/service.yml"
+  }
   depends_on = [aws_instance.kubernatesworker]
 
 }
